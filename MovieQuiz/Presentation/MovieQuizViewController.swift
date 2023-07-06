@@ -75,16 +75,30 @@ final class MovieQuizViewController: UIViewController
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textLabel: UILabel!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-        }
+    private var currentQuestionIndex = 0
+    private var correctAnswers = 0
     
+    private func convert(model: QuizQuestion) -> QuizStepViewModel {
+        let questionStep = QuizStepViewModel(
+            image: UIImage(named: model.image) ?? UIImage(),
+            question: model.text,
+            questionNumber: "\(currentQuestionIndex + 1)/\(questions.count)")
+        return questionStep
+    }
     private  func show(quiz step: QuizStepViewModel) {
         imageView.image = step.image
         counterLabel.text = step.questionNumber
         textLabel.text = step.question}
+    
+    
+    var currentIndex = 0
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let currentQuestion = questions[currentQuestionIndex]
+        show(quiz: QuizStepViewModel(image: <#T##UIImage#>, question: <#T##String#>, questionNumber: <#T##String#>))
+        }
+
         
     
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
@@ -103,16 +117,8 @@ final class MovieQuizViewController: UIViewController
     }
     
     
-    private var currentQuestionIndex = 0
-    private var correctAnswers = 0
     
-    private func convert(model: QuizQuestion) -> QuizStepViewModel {
-        let questionStep = QuizStepViewModel(
-            image: UIImage(named: model.image) ?? UIImage(),
-            question: model.text,
-            questionNumber: "\(currentQuestionIndex + 1)/\(questions.count)")
-        return questionStep
-    }
+    
     
     
     private func showAnswerResult(isCorrect: Bool) {
